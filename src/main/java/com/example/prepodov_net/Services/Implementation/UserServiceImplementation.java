@@ -26,8 +26,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public Optional<UserEntity> getUser(long id) throws Exception {
-        return userRepository.findById(id);
+    public UserEntity getUser(long id) throws Exception {
+        return userRepository.findById(id).orElseThrow(() -> new Exception("Нет такого юзера!"));
     }
 
     @Override

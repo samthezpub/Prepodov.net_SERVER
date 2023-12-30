@@ -20,7 +20,7 @@ public class PagesController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/getuser/{id}")
-    public Optional<UserEntity> getUserInfo(@PathVariable Long id) throws Exception {
+    public UserEntity getUserInfo(@PathVariable Long id) throws Exception {
         return userService.getUser(id);
     }
 

@@ -9,7 +9,7 @@ public interface UserService {
 
     void saveUser(UserEntity user);
     void deleteUser(UserEntity user);
-    Optional<UserEntity> getUser(long id) throws Exception;
+    UserEntity getUser(long id) throws Exception;
     List<UserEntity> getAllUsers();
     void updateUser(UserEntity user);
 
