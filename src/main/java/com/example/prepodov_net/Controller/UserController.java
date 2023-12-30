@@ -14,12 +14,5 @@ public class UserController {
     @Autowired
     private UserServiceImplementation userService;
 
-    @GetMapping(path = "/friends/{id}")
-    public List<UserEntity> getUserFriends(@PathVariable Long id){
-        try {
-            return userService.getUser(id).getFriends();
-        } catch (Exception e) {
-            return List.of();
-        }
-    }
+
 }
