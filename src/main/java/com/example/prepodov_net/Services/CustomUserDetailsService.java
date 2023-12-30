@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<UserEntity> user = userRepository.getUserByUsername(username);
         try {
             return user.map(CustomUserDetails::new)
-                    .orElseThrow(() -> new Exception("Пользователь " + username + "не найден"));
+                    .orElseThrow(() -> new Exception("Пользователь " + username + " не найден"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
