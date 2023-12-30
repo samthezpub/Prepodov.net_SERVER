@@ -1,10 +1,7 @@
 package com.example.prepodov_net.Entity;
 
-import com.example.prepodov_net.Interface.IAuthor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,7 +9,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class UserEntity extends IAuthor {
+@Table(name = "user")
+public class UserEntity extends Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,13 +19,17 @@ public class UserEntity extends IAuthor {
 
     private LocalDate birthdate;
 
+    @OneToMany
     private List<GroupEntity> groups;
 
+    @OneToMany
     private List<UserEntity> friends;
 
+    @OneToMany
     private List<CommentEntity> comments;
 
-    private List<UserPostEntity> posts;
+    @OneToMany
+    private List<PostEntity> posts;
 
     public UserEntity() {
     }

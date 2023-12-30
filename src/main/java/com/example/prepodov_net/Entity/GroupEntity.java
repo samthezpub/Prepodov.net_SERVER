@@ -1,6 +1,29 @@
 package com.example.prepodov_net.Entity;
 
-import com.example.prepodov_net.Interface.IAuthor;
+import jakarta.persistence.*;
+import lombok.Data;
 
-public class GroupEntity extends IAuthor {
+import java.util.List;
+
+@Data
+@Entity
+@Table(name = "group_table")
+public class GroupEntity extends Author {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @OneToMany
+    private List<UserEntity> users;
+
+    @OneToMany
+    private List<PostEntity> posts;
+
 }
