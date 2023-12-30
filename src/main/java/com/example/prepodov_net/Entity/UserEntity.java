@@ -6,13 +6,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "users")
@@ -23,6 +21,7 @@ public class UserEntity extends Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
 
     private String password;
@@ -43,4 +42,6 @@ public class UserEntity extends Author {
     @OneToMany
     private List<PostEntity> posts;
 
+    public UserEntity() {
+    }
 }

@@ -7,9 +7,14 @@ import lombok.Data;
 @Entity
 @Table(name = "comment")
 public class CommentEntity {
+
     @Id
     @GeneratedValue
     private Long id;
+
     @ManyToOne
-    public UserEntity user;
+    private UserEntity user;
+
+    @ManyToOne
+    private PostEntity post;
 }

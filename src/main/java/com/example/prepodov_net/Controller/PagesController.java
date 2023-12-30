@@ -3,12 +3,12 @@ package com.example.prepodov_net.Controller;
 
 // TODO: придумать нормальное название для класса
 
-import com.example.prepodov_net.Entity.UserDTO;
+import com.example.prepodov_net.Entity.PostEntity;
 import com.example.prepodov_net.Entity.UserEntity;
+import com.example.prepodov_net.Services.Implementation.PostServiceImplementation;
 import com.example.prepodov_net.Services.Implementation.UserServiceImplementation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +22,7 @@ import java.util.Optional;
 public class PagesController {
 
     private UserServiceImplementation userService;
+    private PostServiceImplementation postService;
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/getuser/{id}")
@@ -61,5 +62,10 @@ public class PagesController {
         } catch (Exception e) {
             return new ResponseEntity<>(List.of(), HttpStatus.NO_CONTENT);
         }
+    }
+
+    @GetMapping("/post/{post_id}")
+    public Optional<PostEntity> getPostById(@PathVariable Long post_id) throws Exception {
+        return postService.getPostById(post_id);
     }
 }
