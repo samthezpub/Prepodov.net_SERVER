@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "group_table")
+@Table(name = "groups")
 public class GroupEntity extends Author {
 
     @Id
@@ -22,6 +22,9 @@ public class GroupEntity extends Author {
 
     @OneToMany
     private List<UserEntity> users;
+
+    @OneToMany
+    private List<UserEntity> admins;
 
     @OneToMany
     private List<PostEntity> posts;

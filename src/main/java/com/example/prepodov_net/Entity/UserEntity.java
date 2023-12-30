@@ -9,11 +9,15 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity extends Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String username;
+
+    private String password;
 
     private Integer age;
 
