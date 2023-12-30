@@ -1,5 +1,6 @@
 package com.example.prepodov_net;
 
+import com.example.prepodov_net.Entity.UserEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

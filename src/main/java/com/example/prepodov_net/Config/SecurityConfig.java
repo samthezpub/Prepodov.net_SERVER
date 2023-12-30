@@ -1,6 +1,7 @@
 package com.example.prepodov_net.Config;
 
 import com.example.prepodov_net.Entity.UserEntity;
+import com.example.prepodov_net.Services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,10 +25,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails admin = User.builder().username("admin").password(passwordEncoder.encode("admin")).build();
-
-        return new InMemoryUserDetailsManager(admin);
+    public UserDetailsService userDetailsService() {
+        return new CustomUserDetailsService();
     }
 
     @Bean
@@ -36,17 +35,24 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/authed").authenticated()
                         .anyRequest().permitAll()
                 )
 
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+
+                .logout((logout) ->
+                        logout.permitAll()
+                                .logoutSuccessUrl("/")
+                )
+
                 .build();
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService(passwordEncoder()));
+        provider.setUserDetailsService(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
@@ -55,4 +61,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
