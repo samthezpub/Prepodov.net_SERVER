@@ -3,6 +3,7 @@ package com.example.prepodov_net.Controller;
 
 // TODO: придумать нормальное название для класса
 
+import com.example.prepodov_net.Entity.AuthorType;
 import com.example.prepodov_net.Entity.GroupEntity;
 import com.example.prepodov_net.Entity.PostEntity;
 import com.example.prepodov_net.Entity.UserEntity;
@@ -43,8 +44,8 @@ public class PagesController {
     }
 
     @PostMapping("/newuser")
-    public ResponseEntity<?> createUser(@RequestBody UserEntity user){
-        if (user.getUsername() == null || user.getPassword() == null){
+    public ResponseEntity<?> createUser(@RequestBody UserEntity user) {
+        if (user.getUsername() == null || user.getPassword() == null) {
             return new ResponseEntity<>("Неправильное имя или пароль!", HttpStatus.BAD_REQUEST);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -54,7 +55,7 @@ public class PagesController {
     }
 
     @PostMapping("/deleteuser/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             UserEntity user = userService.getUser(id);
             userService.deleteUser(user);
@@ -66,7 +67,7 @@ public class PagesController {
     }
 
     @GetMapping(path = "/user/{id}/friends")
-    public ResponseEntity<List<UserEntity>> getUserFriends(@PathVariable Long id){
+    public ResponseEntity<List<UserEntity>> getUserFriends(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(userService.getUser(id).getFriends(), HttpStatus.OK);
         } catch (Exception e) {
@@ -88,8 +89,8 @@ public class PagesController {
     }
 
     @PostMapping("/post/create")
-    public ResponseEntity<?> createPost(@RequestBody PostEntity post){
-        if (post.getContent() == null){
+    public ResponseEntity<?> createPost(@RequestBody PostEntity post) {
+        if (post.getContent() == null) {
             return new ResponseEntity<>("Невозможно создать пустой пост", HttpStatus.BAD_REQUEST);
         }
 
@@ -123,7 +124,7 @@ public class PagesController {
     }
 
     @PostMapping("/groups/create")
-    public ResponseEntity<?> createGroup(@RequestBody GroupEntity group){
+    public ResponseEntity<?> createGroup(@RequestBody GroupEntity group) {
 //        if (group.getName() == null){
 //            return new ResponseEntity<>("Нельзя создать группу без названия!", HttpStatus.BAD_REQUEST);
 //        }
@@ -134,7 +135,7 @@ public class PagesController {
     }
 
     @PostMapping("/groups/delete/{group_id}")
-    public ResponseEntity<?> deleteGroup(@PathVariable Long group_id){
+    public ResponseEntity<?> deleteGroup(@PathVariable Long group_id) {
         try {
             GroupEntity group = groupService.getGroupById(group_id);
             groupService.deleteGroup(group);

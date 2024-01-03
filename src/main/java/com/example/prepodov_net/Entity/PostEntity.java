@@ -11,6 +11,7 @@ import java.util.List;
 public class PostEntity extends Author {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     private Long authorId;
@@ -25,7 +26,3 @@ public class PostEntity extends Author {
 
 }
 
-enum AuthorType {
-    USER,
-    COMMUNITY
-}
