@@ -4,6 +4,9 @@ import com.example.prepodov_net.Entity.UserEntity;
 import com.example.prepodov_net.Repository.UserRepository;
 import com.example.prepodov_net.Services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +41,20 @@ public class UserServiceImplementation implements UserService {
     @Override
     public void updateUser(UserEntity user) {
         userRepository.save(user);
+    }
+
+
+
+    @Override
+    public UserEntity loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Optional<UserEntity> byUsername = userRepository.getUserByUsername(username);
+        return byUsername.orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден!"));
+    }
+
+    public UserEntity getCurrentUser() throws Exception {
+
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return loadUserByUsername(principal.toString());
     }
 }

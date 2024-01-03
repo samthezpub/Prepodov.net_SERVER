@@ -5,23 +5,27 @@ import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "post")
 public class PostEntity extends Author {
 
+    @Id
     private Long id;
 
-    private Author author;
+    private Long authorId;
+
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    private AuthorType authorType;
 
 //    @OneToMany(fetch = FetchType.EAGER)
 //    private List<CommentEntity> comments;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+}
 
-    @Id
-    public Long getId() {
-        return id;
-    }
+enum AuthorType {
+    USER,
+    COMMUNITY
 }

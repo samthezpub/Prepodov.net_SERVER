@@ -9,7 +9,7 @@ public interface PostService {
 
     void savePost(PostEntity post);
     void deletePost(PostEntity post);
-    Optional<PostEntity> getPostById(long id) throws Exception;
+    PostEntity getPostById(long id) throws Exception;
     List<PostEntity> getAllPosts();
 
 }

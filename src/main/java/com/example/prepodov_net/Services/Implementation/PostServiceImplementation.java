@@ -26,8 +26,8 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Optional<PostEntity> getPostById(long id) throws Exception {
-        return postRepository.findById(id);
+    public PostEntity getPostById(long id) throws Exception {
+        return postRepository.findById(id).orElseThrow(() -> new Exception("Нет такого поста!"));
     }
 
     @Override
