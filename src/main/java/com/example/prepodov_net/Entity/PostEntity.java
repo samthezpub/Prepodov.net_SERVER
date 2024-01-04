@@ -18,6 +18,9 @@ public class PostEntity extends Author {
 
     private String content;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<AttachmentEntity> file;
+
     @Enumerated(EnumType.STRING)
     private AuthorType authorType;
 
