@@ -7,6 +7,10 @@ import com.example.prepodov_net.Entity.AuthorType;
 import com.example.prepodov_net.Entity.GroupEntity;
 import com.example.prepodov_net.Entity.PostEntity;
 import com.example.prepodov_net.Entity.UserEntity;
+import com.example.prepodov_net.Exception.AlreadyHaveGroupException;
+import com.example.prepodov_net.Exception.FoundUserException;
+import com.example.prepodov_net.Exception.GroupNotFindException;
+import com.example.prepodov_net.Exception.GroupUserNotFoundedException;
 import com.example.prepodov_net.Services.Implementation.GroupServiceImplementation;
 import com.example.prepodov_net.Services.Implementation.PostServiceImplementation;
 import com.example.prepodov_net.Services.Implementation.UserServiceImplementation;
@@ -75,6 +79,43 @@ public class PagesController {
         }
     }
 
+    /*
+        Обновление group у user'a
+     */
+
+    @PostMapping(path = "/user/{user_id}/addgroup/{group_id}")
+    public ResponseEntity<?> addGroupToUserProfile(@PathVariable long user_id, @PathVariable Long group_id){
+        try {
+            userService.addGroupForUser(user_id, group_id);
+            return new ResponseEntity<>("Юзер успешно подписался на группу", HttpStatus.OK);
+        } catch (FoundUserException e) {
+            // Если юзер не найден
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupNotFindException e) {
+            // Если группа не найдена
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (AlreadyHaveGroupException e) {
+            // Если у юзера уже есть такая же группа
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping(path = "/user/{user_id}/removegroup/{group_id}")
+    public ResponseEntity<?> removeGroupFromUser(@PathVariable long user_id, @PathVariable Long group_id){
+        try {
+            userService.removeGroupForUser(user_id, group_id);
+            return new ResponseEntity<>("Юзер успешно отписался от группы", HttpStatus.OK);
+        } catch (FoundUserException e) {
+            // Если юзер не найден
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupNotFindException e) {
+            // Если группа не найдена
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupUserNotFoundedException e) {
+            // Если у юзера нет такой группы
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
 
     /*
@@ -132,6 +173,44 @@ public class PagesController {
         groupService.saveGroup(group);
 
         return new ResponseEntity<>("Группа \"" + group.getName() + "\" успешно создана!", HttpStatus.CREATED);
+    }
+
+    /*
+        Добавление юзера в группу
+     */
+
+    @PostMapping(path = "/groups/{group_id}/adduser/{user_id}")
+    public ResponseEntity<?> addUserToGroup(@PathVariable long user_id, @PathVariable Long group_id){
+        try {
+            groupService.addUserToGroup(user_id, group_id);
+            return new ResponseEntity<>("Юзер успешно подписался на группу", HttpStatus.OK);
+        } catch (FoundUserException e) {
+            // Если юзер не найден
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupNotFindException e) {
+            // Если группа не найдена
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (AlreadyHaveGroupException e) {
+            // Если у группы уже есть такой user
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping(path = "/groups/{group_id}/removeuser/{user_id}")
+    public ResponseEntity<?> removeUserFromGroup(@PathVariable long group_id, @PathVariable Long user_id){
+        try {
+            groupService.removeUserFromGroup(group_id, user_id);
+            return new ResponseEntity<>("Юзер успешно удалён с группы", HttpStatus.OK);
+        } catch (FoundUserException e) {
+            // Если юзер не найден
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupNotFindException e) {
+            // Если группа не найдена
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (GroupUserNotFoundedException e) {
+            // Если у группы нет такого user
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping("/groups/delete/{group_id}")
