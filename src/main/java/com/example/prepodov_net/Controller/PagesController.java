@@ -25,7 +25,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin()
 @RequestMapping("/api/v1")
 public class PagesController {
 
@@ -42,7 +42,7 @@ public class PagesController {
 
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("/getuser/{id}")
     public ResponseEntity<UserEntity> getUserInfo(@PathVariable Long id) {
         UserEntity user = null;
@@ -55,14 +55,14 @@ public class PagesController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/test")
-
     @ResponseBody
     public String test(){
         return "success";
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping("/newuser")
     public ResponseEntity<?> createUser(@RequestBody UserEntity user) {
         if (user.getUsername() == null || user.getPassword() == null) {
@@ -74,7 +74,6 @@ public class PagesController {
         return new ResponseEntity<>("Пользователь " + user.getUsername() + " успешно добавлен с ID " + user.getId(), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/deleteuser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
@@ -87,7 +86,6 @@ public class PagesController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/user/{id}/friends")
     public ResponseEntity<List<UserEntity>> getUserFriends(@PathVariable Long id) {
         try {
@@ -101,7 +99,6 @@ public class PagesController {
         Обновление group у user'a
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/user/{user_id}/addgroup/{group_id}")
     public ResponseEntity<?> addGroupToUserProfile(@PathVariable long user_id, @PathVariable Long group_id){
         try {
@@ -119,7 +116,7 @@ public class PagesController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(path = "/user/{user_id}/removegroup/{group_id}")
     public ResponseEntity<?> removeGroupFromUser(@PathVariable long user_id, @PathVariable Long group_id){
         try {
@@ -144,13 +141,11 @@ public class PagesController {
 
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/post/{post_id}")
     public PostEntity getPostById(@PathVariable Long post_id) throws Exception {
         return postService.getPostById(post_id);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/post/create")
     public ResponseEntity<?> createPost(@RequestBody PostEntity post) {
         if (post.getContent() == null) {
@@ -161,7 +156,6 @@ public class PagesController {
         return new ResponseEntity<>("Пост успешно сохранён", HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/post/delete/{post_id}")
     public ResponseEntity<?> deletePost(@PathVariable Long post_id) throws Exception {
         try {
@@ -182,13 +176,11 @@ public class PagesController {
 
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/groups/{group_id}")
     public GroupEntity getGroupById(@PathVariable Long group_id) throws Exception {
         return groupService.getGroupById(group_id);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/groups/create")
     public ResponseEntity<?> createGroup(@RequestBody GroupEntity group) {
 //        if (group.getName() == null){
@@ -204,7 +196,6 @@ public class PagesController {
         Добавление юзера в группу
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/groups/{group_id}/adduser/{user_id}")
     public ResponseEntity<?> addUserToGroup(@PathVariable long user_id, @PathVariable Long group_id){
         try {
@@ -222,7 +213,6 @@ public class PagesController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/groups/{group_id}/removeuser/{user_id}")
     public ResponseEntity<?> removeUserFromGroup(@PathVariable long group_id, @PathVariable Long user_id){
         try {
@@ -240,7 +230,6 @@ public class PagesController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/groups/delete/{group_id}")
     public ResponseEntity<?> deleteGroup(@PathVariable Long group_id) {
         try {

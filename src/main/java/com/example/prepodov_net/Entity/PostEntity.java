@@ -33,8 +33,13 @@ public class PostEntity extends Author {
     @Transient
     private String postedAtFormatted;
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    private List<CommentEntity> comments;
+    //TODO можно сделать авторов лайков и счётчик
+    @OneToMany
+    @Column(name = "likes")
+    private List<LikeEntity> likes;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CommentEntity> comments;
 
     public String getPostedAtFormatted() {
         LocalDateTime now = LocalDateTime.now();

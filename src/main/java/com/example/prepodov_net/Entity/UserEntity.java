@@ -33,14 +33,15 @@ public class UserEntity extends Author implements UserDetails {
 
     @Transient
     private Integer age;
-
     private LocalDate birthdate;
+    private String city;
+    private String education;
 
 
 
     private LocalDateTime register_date = LocalDateTime.now();
 
-    @OneToMany
+    @ManyToMany
     private List<GroupEntity> groups;
 
     @OneToMany

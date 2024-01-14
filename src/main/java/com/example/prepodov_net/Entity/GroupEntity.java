@@ -2,10 +2,13 @@ package com.example.prepodov_net.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "groups")
 public class GroupEntity extends Author {
@@ -20,6 +23,11 @@ public class GroupEntity extends Author {
     @Column(name = "description")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "group_type")
+    private GroupTypeEnum groupType;
+
+
     @OneToMany
     private List<UserEntity> users;
 
@@ -28,5 +36,5 @@ public class GroupEntity extends Author {
 
     @OneToMany
     private List<PostEntity> posts;
-
 }
+
